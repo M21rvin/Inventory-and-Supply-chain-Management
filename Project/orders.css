@@ -1,0 +1,5 @@
+/* ── ORDERS — extra badge color ── */
+.badge.blue {
+  background: rgba(74, 240, 200, 0.12);
+  color: var(--accent2);
+}

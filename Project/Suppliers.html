@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IMS — Suppliers</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="products.css">
+  <link rel="stylesheet" href="suppliers.css">
+</head>
+<body>
+
+<div class="shell">
+  <aside class="sidebar">
+    <div class="logo"><div class="logo-dot"></div>IMS</div>
+    <div class="nav-label">Main</div>
+    <nav>
+      <ul>
+        <li><a href="dashboard.html"><span class="icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></span>Dashboard</a></li>
+        <li><a href="products.html"><span class="icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></span>Products</a></li>
+        <li class="active"><a href="suppliers.html"><span class="icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>Suppliers</a></li>
+        <li><a href="orders.html"><span class="icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span>Orders</a></li>
+        <li><a href="reports.html"><span class="icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></span>Reports</a></li>
+      </ul>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="login.html"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>Logout</a>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <h1 class="page-title">Sup<span>pliers</span></h1>
+      <div class="topbar-right">
+        <div class="date-badge" id="dateDisplay"></div>
+        <div class="avatar">A</div>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="toolbar">
+        <div class="search-wrap">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" class="search-input" placeholder="Search suppliers..." id="searchInput">
+        </div>
+        <div class="toolbar-right">
+          <button class="btn-add" id="openModal">+ Add Supplier</button>
+        </div>
+      </div>
+      <div class="supplier-grid" id="supplierGrid">
+        <p style="color:var(--muted);font-size:11px">Loading...</p>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- ADD / EDIT MODAL -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="modalTitle">Add Supplier</div>
+      <button class="modal-close" id="closeModal">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="form-group"><label>Company Name</label><input type="text" id="fName" placeholder="e.g. SoundWave Inc"></div>
+        <div class="form-group"><label>Contact Person</label><input type="text" id="fContact" placeholder="e.g. Raj Mehta"></div>
+        <div class="form-group"><label>Email</label><input type="email" id="fEmail" placeholder="e.g. raj@soundwave.com"></div>
+        <div class="form-group"><label>Phone</label><input type="text" id="fPhone" placeholder="e.g. +91 98765 43210"></div>
+        <div class="form-group"><label>Category Supplied</label><input type="text" id="fCategory" placeholder="e.g. Audio, Accessories"></div>
+        <div class="form-group"><label>City</label><input type="text" id="fCity" placeholder="e.g. Mumbai"></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" id="cancelModal">Cancel</button>
+      <button class="btn-save" id="saveSupplier">Save Supplier</button>
+    </div>
+  </div>
+</div>
+
+<!-- DELETE CONFIRM -->
+<div class="modal-overlay" id="deleteOverlay">
+  <div class="modal modal-sm">
+    <div class="modal-header">
+      <div class="modal-title">Remove Supplier</div>
+      <button class="modal-close" id="closeDelete">✕</button>
+    </div>
+    <div class="modal-body">
+      <p style="font-size:13px;color:var(--muted);line-height:1.6">Remove <strong id="deleteSupplierName" style="color:var(--text)"></strong>?</p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" id="cancelDelete">Cancel</button>
+      <button class="btn-delete" id="confirmDelete">Remove</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const API = 'http://localhost:5000/api';
+  let suppliers = [];
+  let editId = null, deleteId = null;
+  const colors = ['var(--accent)', 'var(--accent2)', 'var(--accent4)', 'var(--accent3)'];
+
+  document.getElementById('dateDisplay').textContent =
+    new Date().toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' });
+
+  function initials(name) {
+    return name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
+  }
+
+  async function loadSuppliers() {
+    const res = await fetch(`${API}/suppliers`);
+    suppliers = await res.json();
+    render();
+  }
+
+  function render() {
+    const search = document.getElementById('searchInput').value.toLowerCase();
+    const filtered = suppliers.filter(s =>
+      s.name.toLowerCase().includes(search) ||
+      s.contact.toLowerCase().includes(search) ||
+      s.city.toLowerCase().includes(search)
+    );
+    document.getElementById('supplierGrid').innerHTML = filtered.map((s, i) => `
+      <div class="supplier-card" style="animation-delay:${i * 0.05}s">
+        <div class="supplier-card-top">
+          <div class="supplier-avatar" style="background:${colors[i % colors.length]}20;color:${colors[i % colors.length]}">${initials(s.name)}</div>
+          <div class="action-btns">
+            <button class="btn-icon edit" onclick="openEdit(${s.id})">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+            </button>
+            <button class="btn-icon del" onclick="openDelete(${s.id}, '${s.name}')">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="supplier-name">${s.name}</div>
+        <div class="supplier-contact">${s.contact}</div>
+        <div class="supplier-meta">
+          <div class="meta-row"><span>📧</span> ${s.email}</div>
+          <div class="meta-row"><span>📞</span> ${s.phone}</div>
+          <div class="meta-row"><span>📦</span> ${s.category}</div>
+          <div class="meta-row"><span>📍</span> ${s.city}</div>
+        </div>
+      </div>`).join('') || '<p style="color:var(--muted);font-size:11px">No suppliers found.</p>';
+  }
+
+  function openModal() {
+    editId = null;
+    document.getElementById('modalTitle').textContent = 'Add Supplier';
+    ['fName','fContact','fEmail','fPhone','fCategory','fCity'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('modalOverlay').classList.add('active');
+  }
+  function openEdit(id) {
+    const s = suppliers.find(x => x.id === id);
+    editId = id;
+    document.getElementById('modalTitle').textContent = 'Edit Supplier';
+    document.getElementById('fName').value     = s.name;
+    document.getElementById('fContact').value  = s.contact;
+    document.getElementById('fEmail').value    = s.email;
+    document.getElementById('fPhone').value    = s.phone;
+    document.getElementById('fCategory').value = s.category;
+    document.getElementById('fCity').value     = s.city;
+    document.getElementById('modalOverlay').classList.add('active');
+  }
+  function closeModal()  { document.getElementById('modalOverlay').classList.remove('active'); }
+  function openDelete(id, name) {
+    deleteId = id;
+    document.getElementById('deleteSupplierName').textContent = name;
+    document.getElementById('deleteOverlay').classList.add('active');
+  }
+  function closeDelete() { document.getElementById('deleteOverlay').classList.remove('active'); }
+
+  document.getElementById('saveSupplier').addEventListener('click', async () => {
+    const body = {
+      name:     document.getElementById('fName').value.trim(),
+      contact:  document.getElementById('fContact').value.trim(),
+      email:    document.getElementById('fEmail').value.trim(),
+      phone:    document.getElementById('fPhone').value.trim(),
+      category: document.getElementById('fCategory').value.trim(),
+      city:     document.getElementById('fCity').value.trim()
+    };
+    if (!body.name) return;
+    const url    = editId ? `${API}/suppliers/${editId}` : `${API}/suppliers`;
+    const method = editId ? 'PUT' : 'POST';
+    await fetch(url, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+    closeModal();
+    loadSuppliers();
+  });
+
+  document.getElementById('confirmDelete').addEventListener('click', async () => {
+    await fetch(`${API}/suppliers/${deleteId}`, { method: 'DELETE' });
+    closeDelete();
+    loadSuppliers();
+  });
+
+  document.getElementById('openModal').addEventListener('click', openModal);
+  document.getElementById('closeModal').addEventListener('click', closeModal);
+  document.getElementById('cancelModal').addEventListener('click', closeModal);
+  document.getElementById('closeDelete').addEventListener('click', closeDelete);
+  document.getElementById('cancelDelete').addEventListener('click', closeDelete);
+  document.getElementById('searchInput').addEventListener('input', render);
+
+  loadSuppliers();
+</script>
+</body>
+</html>

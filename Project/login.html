@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IMS — Login</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="login.css">
+</head>
+<body>
+
+  <div class="bg-grid"></div>
+  <div class="bg-glow"></div>
+
+  <section>
+    <div class="login-card">
+
+      <div class="logo">
+        <div class="logo-dot"></div>
+        IMS
+      </div>
+      <p class="logo-sub">Inventory Management System</p>
+
+      <!-- Error message from Flask -->
+      <div id="errorMsg" style="
+        display:none;
+        background:rgba(240,74,122,0.1);
+        border:1px solid rgba(240,74,122,0.3);
+        border-radius:8px;
+        padding:10px 14px;
+        font-size:12px;
+        color:#f04a7a;
+        margin-bottom:16px;
+      "></div>
+
+      <form id="loginForm">
+
+        <div class="input-group">
+          <label for="email">Email</label>
+          <div class="input-wrap">
+            <svg class="input-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            <input type="email" id="email" placeholder="admin@ims.com" required>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label for="password">Password</label>
+          <div class="input-wrap">
+            <svg class="input-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            <input type="password" id="password" placeholder="••••••••" required>
+            <button type="button" class="toggle-pw" id="togglePw">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="remember-forgot">
+          <label class="checkbox-label">
+            <input type="checkbox" id="remember">
+            <span class="checkmark"></span>
+            Remember me
+          </label>
+          <a href="#" class="forgot-link">Forgot password?</a>
+        </div>
+
+        <button type="submit" class="btn-login" id="loginBtn">
+          <span id="btnText">Login</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </button>
+
+        <div class="divider"><span>default credentials</span></div>
+        <div class="register-link" style="font-size:11px;color:var(--muted)">
+          Email: <strong style="color:var(--accent)">admin@ims.com</strong> &nbsp;|&nbsp; Password: <strong style="color:var(--accent)">admin123</strong>
+        </div>
+
+      </form>
+    </div>
+  </section>
+
+  <script>
+    const API = 'http://localhost:5000/api';
+
+    document.getElementById('togglePw').addEventListener('click', () => {
+      const input = document.getElementById('password');
+      input.type = input.type === 'password' ? 'text' : 'password';
+    });
+
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn     = document.getElementById('loginBtn');
+      const btnText = document.getElementById('btnText');
+      const errDiv  = document.getElementById('errorMsg');
+
+      btn.classList.add('loading');
+      btnText.textContent = 'Logging in...';
+      errDiv.style.display = 'none';
+
+      try {
+        const res = await fetch(`${API}/login`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
+          body: JSON.stringify({
+            email:    document.getElementById('email').value,
+            password: document.getElementById('password').value
+          })
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+          // Success — go to dashboard
+          window.location.href = 'dashboard.html';
+        } else {
+          // Show error from Flask
+          errDiv.textContent = data.error || 'Login failed';
+          errDiv.style.display = 'block';
+          btn.classList.remove('loading');
+          btnText.textContent = 'Login';
+        }
+      } catch (err) {
+        errDiv.textContent = 'Cannot connect to server. Is Flask running?';
+        errDiv.style.display = 'block';
+        btn.classList.remove('loading');
+        btnText.textContent = 'Login';
+      }
+    });
+  </script>
+
+</body>
+</html>

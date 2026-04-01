@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IMS — Products</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="products.css">
+</head>
+<body>
+
+<div class="shell">
+  <aside class="sidebar">
+    <div class="logo"><div class="logo-dot"></div>IMS</div>
+    <div class="nav-label">Main</div>
+    <nav>
+      <ul>
+        <li><a href="dashboard.html"><span class="icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></span>Dashboard</a></li>
+        <li class="active"><a href="products.html"><span class="icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></span>Products</a></li>
+        <li><a href="suppliers.html"><span class="icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>Suppliers</a></li>
+        <li><a href="orders.html"><span class="icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span>Orders</a></li>
+        <li><a href="reports.html"><span class="icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></span>Reports</a></li>
+      </ul>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="login.html"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>Logout</a>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <h1 class="page-title">Pro<span>ducts</span></h1>
+      <div class="topbar-right">
+        <div class="date-badge" id="dateDisplay"></div>
+        <div class="avatar">A</div>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="toolbar">
+        <div class="search-wrap">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" class="search-input" placeholder="Search products..." id="searchInput">
+        </div>
+        <div class="toolbar-right">
+          <select class="filter-select" id="filterStatus">
+            <option value="">All Status</option>
+            <option value="In Stock">In Stock</option>
+            <option value="Low">Low</option>
+            <option value="Critical">Critical</option>
+          </select>
+          <select class="filter-select" id="filterCategory">
+            <option value="">All Categories</option>
+            <option value="Audio">Audio</option>
+            <option value="Accessories">Accessories</option>
+            <option value="Input">Input</option>
+            <option value="Video">Video</option>
+          </select>
+          <button class="btn-add" id="openModal">+ Add Product</button>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Product</th><th>SKU</th><th>Category</th><th>Price</th><th>Stock</th><th>Supplier</th><th>Status</th><th>Actions</th></tr>
+          </thead>
+          <tbody id="tableBody">
+            <tr><td colspan="8" style="color:var(--muted);font-size:11px;padding:20px">Loading...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- ADD / EDIT MODAL -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="modalTitle">Add Product</div>
+      <button class="modal-close" id="closeModal">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="form-group"><label>Product Name</label><input type="text" id="fName" placeholder="e.g. Wireless Headset"></div>
+        <div class="form-group"><label>SKU</label><input type="text" id="fSku" placeholder="e.g. WHP-001"></div>
+        <div class="form-group"><label>Category</label><select id="fCategory"><option>Audio</option><option>Accessories</option><option>Input</option><option>Video</option></select></div>
+        <div class="form-group"><label>Price (₹)</label><input type="number" id="fPrice" placeholder="e.g. 2999"></div>
+        <div class="form-group"><label>Stock Quantity</label><input type="number" id="fStock" placeholder="e.g. 50"></div>
+        <div class="form-group"><label>Supplier</label><input type="text" id="fSupplier" placeholder="e.g. Nexgen Ltd"></div>
+      </div>
+      <p id="formError" style="color:var(--accent3);font-size:11px;margin-top:10px;display:none"></p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" id="cancelModal">Cancel</button>
+      <button class="btn-save" id="saveProduct">Save Product</button>
+    </div>
+  </div>
+</div>
+
+<!-- DELETE CONFIRM -->
+<div class="modal-overlay" id="deleteOverlay">
+  <div class="modal modal-sm">
+    <div class="modal-header">
+      <div class="modal-title">Delete Product</div>
+      <button class="modal-close" id="closeDelete">✕</button>
+    </div>
+    <div class="modal-body">
+      <p style="font-size:13px;color:var(--muted);line-height:1.6">Delete <strong id="deleteProductName" style="color:var(--text)"></strong>? This cannot be undone.</p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" id="cancelDelete">Cancel</button>
+      <button class="btn-delete" id="confirmDelete">Delete</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const API = 'http://localhost:5000/api';
+  let products = [];
+  let editId = null;
+  let deleteId = null;
+
+  document.getElementById('dateDisplay').textContent =
+    new Date().toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' });
+
+  function getStatus(stock) {
+    if (stock <= 5)  return { label: 'Critical', cls: 'low' };
+    if (stock <= 25) return { label: 'Low',      cls: 'warn' };
+    return                  { label: 'In Stock', cls: 'ok' };
+  }
+
+  // ── LOAD ALL PRODUCTS FROM FLASK ──
+  async function loadProducts() {
+    const res = await fetch(`${API}/products`);
+    products = await res.json();
+    render();
+  }
+
+  function render() {
+    const search  = document.getElementById('searchInput').value.toLowerCase();
+    const filterS = document.getElementById('filterStatus').value;
+    const filterC = document.getElementById('filterCategory').value;
+
+    const filtered = products.filter(p => {
+      const st = getStatus(p.stock);
+      return (
+        (p.name.toLowerCase().includes(search) || p.sku.toLowerCase().includes(search)) &&
+        (!filterS || st.label === filterS) &&
+        (!filterC || p.category === filterC)
+      );
+    });
+
+    document.getElementById('tableBody').innerHTML = filtered.map(p => {
+      const st = getStatus(p.stock);
+      return `<tr>
+        <td><strong>${p.name}</strong></td>
+        <td class="sku">${p.sku}</td>
+        <td><span class="cat-badge">${p.category}</span></td>
+        <td>₹${p.price.toLocaleString()}</td>
+        <td>${p.stock}</td>
+        <td class="sku">${p.supplier}</td>
+        <td><span class="badge ${st.cls}">${st.label}</span></td>
+        <td><div class="action-btns">
+          <button class="btn-icon edit" onclick="openEdit(${p.id})">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          </button>
+          <button class="btn-icon del" onclick="openDelete(${p.id}, '${p.name}')">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
+          </button>
+        </div></td>
+      </tr>`;
+    }).join('') || `<tr><td colspan="8" style="color:var(--muted);font-size:11px;padding:20px">No products found.</td></tr>`;
+  }
+
+  // ── MODAL HELPERS ──
+  function openModal() {
+    editId = null;
+    document.getElementById('modalTitle').textContent = 'Add Product';
+    ['fName','fSku','fPrice','fStock','fSupplier'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('fCategory').value = 'Audio';
+    document.getElementById('formError').style.display = 'none';
+    document.getElementById('modalOverlay').classList.add('active');
+  }
+  function openEdit(id) {
+    const p = products.find(x => x.id === id);
+    editId = id;
+    document.getElementById('modalTitle').textContent = 'Edit Product';
+    document.getElementById('fName').value     = p.name;
+    document.getElementById('fSku').value      = p.sku;
+    document.getElementById('fCategory').value = p.category;
+    document.getElementById('fPrice').value    = p.price;
+    document.getElementById('fStock').value    = p.stock;
+    document.getElementById('fSupplier').value = p.supplier;
+    document.getElementById('formError').style.display = 'none';
+    document.getElementById('modalOverlay').classList.add('active');
+  }
+  function closeModal()  { document.getElementById('modalOverlay').classList.remove('active'); }
+  function openDelete(id, name) {
+    deleteId = id;
+    document.getElementById('deleteProductName').textContent = name;
+    document.getElementById('deleteOverlay').classList.add('active');
+  }
+  function closeDelete() { document.getElementById('deleteOverlay').classList.remove('active'); }
+
+  // ── SAVE — POST or PUT to Flask ──
+  document.getElementById('saveProduct').addEventListener('click', async () => {
+    const body = {
+      name:     document.getElementById('fName').value.trim(),
+      sku:      document.getElementById('fSku').value.trim(),
+      category: document.getElementById('fCategory').value,
+      price:    parseFloat(document.getElementById('fPrice').value),
+      stock:    parseInt(document.getElementById('fStock').value),
+      supplier: document.getElementById('fSupplier').value.trim()
+    };
+    if (!body.name || !body.sku || isNaN(body.price) || isNaN(body.stock)) return;
+
+    const url    = editId ? `${API}/products/${editId}` : `${API}/products`;
+    const method = editId ? 'PUT' : 'POST';
+
+    const res = await fetch(url, {
+      method,
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    });
+    const data = await res.json();
+
+    if (!res.ok) {
+      document.getElementById('formError').textContent = data.error || 'Something went wrong';
+      document.getElementById('formError').style.display = 'block';
+      return;
+    }
+    closeModal();
+    loadProducts(); // refresh from DB
+  });
+
+  // ── DELETE — DELETE to Flask ──
+  document.getElementById('confirmDelete').addEventListener('click', async () => {
+    await fetch(`${API}/products/${deleteId}`, { method: 'DELETE' });
+    closeDelete();
+    loadProducts();
+  });
+
+  document.getElementById('openModal').addEventListener('click', openModal);
+  document.getElementById('closeModal').addEventListener('click', closeModal);
+  document.getElementById('cancelModal').addEventListener('click', closeModal);
+  document.getElementById('closeDelete').addEventListener('click', closeDelete);
+  document.getElementById('cancelDelete').addEventListener('click', closeDelete);
+  document.getElementById('searchInput').addEventListener('input', render);
+  document.getElementById('filterStatus').addEventListener('change', render);
+  document.getElementById('filterCategory').addEventListener('change', render);
+
+  loadProducts();
+</script>
+</body>
+</html>
