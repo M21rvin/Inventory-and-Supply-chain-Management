@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IMS — Reports</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/style.css">
+  <link rel="stylesheet" href="/static/css/reports.css">
+  
+</head>
+<body>
+<div class="shell">
+  <aside class="sidebar">
+    <div class="logo"><div class="logo-dot"></div>IMS</div>
+    <div class="nav-label">Main</div>
+    <nav><ul>
+      <li><a href="/dashboard"><span class="icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></span>Dashboard</a></li>
+      <li><a href="/products"><span class="icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></span>Products</a></li>
+      <li><a href="/suppliers"><span class="icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>Suppliers</a></li>
+      <li><a href="/orders"><span class="icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span>Orders</a></li>
+      <li class="active"><a href="/reports"><span class="icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></span>Reports</a></li>
+    </ul></nav>
+    <div class="sidebar-footer"><a id="logoutBtn" style="cursor:pointer"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>Logout</a></div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <h1 class="page-title">Re<span>ports</span></h1>
+      <div class="topbar-right"><div class="date-badge" id="dateDisplay"></div><div class="avatar" id="avatarInitial">A</div></div>
+    </div>
+
+    <div class="content">
+      <!-- STATS -->
+      <div class="stat-row">
+        <div class="stat-box"><div class="stat-label">Total Revenue</div><div class="stat-value" id="sRevenue" style="color:var(--accent)">—</div><div class="stat-sub">all delivered orders</div></div>
+        <div class="stat-box"><div class="stat-label">Orders Fulfilled</div><div class="stat-value" id="sDelivered" style="color:var(--accent2)">—</div><div class="stat-sub">delivered status</div></div>
+        <div class="stat-box"><div class="stat-label">Avg Order Value</div><div class="stat-value" id="sAvg" style="color:var(--accent4)">—</div><div class="stat-sub">per order</div></div>
+        <div class="stat-box"><div class="stat-label">Low Stock Items</div><div class="stat-value" id="sLow" style="color:var(--accent3)">—</div><div class="stat-sub">need reorder soon</div></div>
+      </div>
+
+      <!-- CHARTS ROW -->
+      <div class="charts-row">
+        <div class="chart-panel"><div class="panel-header"><div class="panel-title">Monthly Orders Trend</div></div><canvas id="ordersChart" height="180"></canvas></div>
+        <div class="chart-panel"><div class="panel-header"><div class="panel-title">Category Breakdown</div></div><canvas id="categoryChart" height="180"></canvas></div>
+      </div>
+
+      <!-- BOTTOM ROW -->
+      <div class="bottom-row">
+        <div class="chart-panel"><div class="panel-header"><div class="panel-title">Top Products by Revenue</div></div><canvas id="topProductsChart" height="160"></canvas></div>
+        <div class="chart-panel"><div class="panel-header"><div class="panel-title">Order Status Split</div></div><canvas id="statusChart" height="160"></canvas></div>
+      </div>
+
+      <!-- DEMAND FORECAST TABLE -->
+      <div class="chart-panel" style="margin-bottom:0">
+        <div class="panel-header">
+          <div class="panel-title">Demand Forecast — Next Month <span style="font-size:9px;padding:3px 8px;background:rgba(200,240,74,0.12);color:var(--accent);border-radius:4px;letter-spacing:0.04em;margin-left:8px">AI / Moving Avg</span></div>
+        </div>
+        <table style="width:100%;border-collapse:collapse">
+          <thead>
+            <tr>
+              <th style="font-size:9px;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);text-align:left;padding:8px 0;border-bottom:1px solid var(--border)">Product</th>
+              <th style="font-size:9px;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);text-align:left;padding:8px 0;border-bottom:1px solid var(--border)">Current Stock</th>
+              <th style="font-size:9px;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);text-align:left;padding:8px 0;border-bottom:1px solid var(--border)">Avg Demand</th>
+              <th style="font-size:9px;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);text-align:left;padding:8px 0;border-bottom:1px solid var(--border)">Predicted Next Month</th>
+              <th style="font-size:9px;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);text-align:left;padding:8px 0;border-bottom:1px solid var(--border)">Suggested Reorder</th>
+              <th style="font-size:9px;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);text-align:left;padding:8px 0;border-bottom:1px solid var(--border)">Alert</th>
+            </tr>
+          </thead>
+          <tbody id="forecastBody"><tr><td colspan="6" style="color:var(--muted);font-size:11px;padding:16px">Loading forecast...</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+</div>
+
+
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script src="/static/js/common.js"></script>
+<script src="/static/js/reports.js"></script>
+</body>
+</html>

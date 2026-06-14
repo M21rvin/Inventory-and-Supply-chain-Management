@@ -1,0 +1,25 @@
+# Core Flask
+Flask==3.0.3
+Flask-SQLAlchemy==3.1.1
+Flask-Cors==4.0.1
+
+# Authentication
+PyJWT==2.8.0
+Werkzeug==3.0.3
+
+# Excel / CSV file upload
+pandas==2.2.2
+openpyxl==3.1.2
+
+# Production server (for Railway/Render)
+gunicorn==22.0.0
+
+# ── Database drivers (install only what you need) ──
+# SQLite: built into Python — nothing to install
+#
+# MySQL (uncomment when using Railway MySQL or PlanetScale):
+# PyMySQL==1.1.1
+# cryptography==42.0.8
+#
+# PostgreSQL (uncomment when using Render/Supabase/Neon):
+# psycopg2-binary==2.9.9

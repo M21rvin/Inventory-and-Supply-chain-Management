@@ -1,0 +1,72 @@
+/* ── SUPPLIER GRID ── */
+.supplier-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+/* ── SUPPLIER CARD ── */
+.supplier-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 20px;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+  animation: fadeUp 0.4s ease both;
+}
+
+.supplier-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255,255,255,0.14);
+}
+
+.supplier-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.supplier-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Syne', sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+
+.supplier-name {
+  font-family: 'Syne', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+
+.supplier-contact {
+  font-size: 11px;
+  color: var(--muted);
+  margin-bottom: 16px;
+}
+
+.supplier-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.meta-row {
+  font-size: 11px;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.meta-row span {
+  font-size: 12px;
+}
